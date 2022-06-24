@@ -8,7 +8,6 @@ replace (
 	github.com/matryer/moq => github.com/rancher/moq v0.0.0-20190404221404-ee5226d43009
 
 	k8s.io/client-go => github.com/rancher/client-go v1.24.0-rancher1
-	k8s.io/component-base => k8s.io/component-base v0.24.0
 )
 
 require (
@@ -36,9 +35,10 @@ require (
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	k8s.io/api v0.24.0
 	k8s.io/apiextensions-apiserver v0.24.0
-	k8s.io/apimachinery v0.24.0
+	k8s.io/apimachinery v0.24.1
 	k8s.io/apiserver v0.24.0
 	k8s.io/client-go v12.0.0+incompatible
+	k8s.io/component-base v0.24.1 // indirect
 	k8s.io/klog v1.0.0
 	k8s.io/kube-aggregator v0.24.0
 	k8s.io/kube-openapi v0.0.0-20220328201542-3ee0da9b0b42
@@ -102,7 +102,6 @@ require (
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
-	k8s.io/component-base v0.24.1 // indirect
 	k8s.io/klog/v2 v2.60.1 // indirect
 	k8s.io/utils v0.0.0-20220210201930-3a6ce19ff2f9 // indirect
 	sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.30 // indirect
