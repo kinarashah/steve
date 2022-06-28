@@ -348,6 +348,23 @@ func (s *PodImpersonation) createPod(ctx context.Context, user user.Info, role *
 	if err != nil {
 		return nil, err
 	}
+	if _, ok := tokenSecret.Data["token"]; !ok {
+		for {
+			logrus.Infof("waiting for token to be populated for token secret %v", tokenSecret)
+			time.Sleep(3 * time.Second)
+			tokenSecret, err = client.CoreV1().Secrets(sa.Namespace).Get(ctx, sc.Name, metav1.GetOptions{})
+			if err != nil {
+				logrus.Infof("tokenSecret %s not found", sc.Name)
+				return nil, err
+			}
+			if _, ok := tokenSecret.Data["token"]; ok {
+				logrus.Infof("found token for tokenSecret data %s", sc.Name)
+				break
+			}
+		}
+	} else {
+		logrus.Infof("tokenSecret data is populated correctly")
+	}
 
 	pod = s.augmentPod(pod, sa, tokenSecret, podOptions.ImageOverride)
 
@@ -372,6 +389,7 @@ func (s *PodImpersonation) createPod(ctx context.Context, user user.Info, role *
 	if err != nil {
 		return nil, err
 	}
+	pod.Labels["debug"] = "true"
 
 	pod, err = client.CoreV1().Pods(pod.Namespace).Create(ctx, pod, metav1.CreateOptions{})
 	if err != nil {
